@@ -56,8 +56,8 @@ class SignupForm extends Model
         //$user->generateEmailVerificationToken();
         $user->status = 10;
         $user->verification_token = null;
-        return $user->save() && $this->sendEmail($user);
-
+        return $user->save();
+        //return $user->save() && $this->sendEmail($user);
     }
 
     /**
