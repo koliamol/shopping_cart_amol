@@ -176,31 +176,16 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->signup()){
-                /*
-                $hdn_session_id = Yii::$app->request->post('hdn_session_id','');
-                if($hdn_session_id!=''){
-                    $cartModel = Cart::findOne(['session_id'=>$hdn_session_id]);
-                    if(!empty($cartModel)){
-                        $cartModel->user_id = Yii::$app->user->identity->id;
-                        $cartModel->session_id = Yii::$app->session->getId();
-                        $cartModel->status = 1;
-                        $cartModel->save();
-                    }
-                }*/
-                if(Yii::$app->request->referrer){
-                    Yii::$app->session->setFlash('success', 'Thank you for registration. Please login.');
-                    return $this->redirect('login');
-                    //return $this->redirect(Yii::$app->request->referrer);
-                }else{
-                    Yii::$app->session->setFlash('success', 'Thank you for registration. Please login.');
-                    return $this->redirect('login');
-                    //return $this->goHome();
-                }
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            if(Yii::$app->request->referrer){
+                Yii::$app->session->setFlash('success', 'Thank you for registration. Please login.');
+                return $this->redirect('login');
+                //return $this->redirect(Yii::$app->request->referrer);
+            }else{
+                Yii::$app->session->setFlash('success', 'Thank you for registration. Please login.');
+                return $this->redirect('login');
+                //return $this->goHome();
             }
-            //Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            //return $this->goHome();
         }
 
         return $this->render('signup', [
